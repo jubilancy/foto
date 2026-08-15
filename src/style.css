@@ -1,0 +1,204 @@
+/* ---------------------------------------------------
+   Gallery site — quiet paper ground, tight display type,
+   true masonry (CSS columns), grain-hover as the one
+   deliberate flourish.
+--------------------------------------------------- */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --paper: #f6f4ef;
+  --ink: #1c1b19;
+  --line: #dcd8cf;
+  --accent: #8a6a4f; /* warm umber, not the templated terracotta */
+  --muted: #8b8579;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- header / nav ---------- */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  padding: 1.75rem clamp(1.25rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(246, 244, 239, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+
+.wordmark {
+  font-family: "Fraunces", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+.site-nav a.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+/* ---------- masonry grid ---------- */
+
+.grid {
+  padding: clamp(1rem, 3vw, 2rem);
+  column-count: 2;
+  column-gap: clamp(0.5rem, 1.2vw, 0.9rem);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 1000px) {
+  .grid {
+    column-count: 4;
+  }
+}
+
+@media (min-width: 1400px) {
+  .grid {
+    column-count: 5;
+  }
+}
+
+.tile {
+  margin: 0 0 clamp(0.5rem, 1.2vw, 0.9rem);
+  break-inside: avoid;
+  overflow: hidden;
+  background: #e9e6df; /* placeholder tone while an image loads */
+  position: relative;
+}
+
+.tile img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.tile:hover img {
+  transform: scale(1.03);
+  filter: saturate(1.06) contrast(1.02);
+}
+
+/* subtle grain/vignette on hover — the one signature flourish */
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(28, 27, 25, 0.18) 130%
+  );
+  transition: opacity 0.5s ease;
+}
+
+.tile:hover::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile img,
+  .tile::after {
+    transition: none;
+  }
+  .tile:hover img {
+    transform: none;
+  }
+}
+
+/* ---------- landing page ---------- */
+
+.landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.landing-title {
+  font-family: "Fraunces", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  letter-spacing: 0.02em;
+  margin: 0 0 2.5rem;
+  color: var(--ink);
+}
+
+.landing-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.landing-list a {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.landing-list a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
